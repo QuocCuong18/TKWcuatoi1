@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Cá Nhân - Quốc Cường</title>
+  <!-- Liên kết stylesheet bên ngoài -->
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ==========================================================================
+       CSS NHÚNG ĐỒNG BỘ 100% VỚI STYLE.CSS
+       ========================================================================== */
+    :root {
+      --color-primary: #2563eb;
+      --color-secondary: #06b6d4;
+      --text-dark: #0f172a;
+      --text-medium: #475569;
+      --text-light: #94a3b8;
+      --color-background: #f8fafc;
+      --color-surface: #ffffff;
+      --color-border: #e2e8f0;
+
+      --spacing-xs: 6px;
+      --spacing-sm: 10px;
+      --spacing-md: 16px;
+      --spacing-lg: 24px;
+      --spacing-xl: 36px;
+
+      --sidebar-width: 280px;
+      --layout-max-width: 1180px;
+      --avatar-size: 88px;
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-full: 9999px;
+      --radius-circle: 50%;
+
+      --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-hover: 0 10px 25px -5px rgba(37, 99, 235, 0.12);
+      --transition-normal: all 0.25s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: var(--color-background);
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* NAVBAR & HAMBURGER MENU */
+    .navbar {
+      background-color: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+    }
+
+    .nav-container {
+      max-width: var(--layout-max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--spacing-sm) var(--spacing-lg);
+      position: relative;
+    }
+
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span { color: var(--color-primary); }
+
+    .nav-list {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: var(--spacing-lg);
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-medium);
+      font-weight: 600;
+      font-size: 0.92rem;
+      transition: var(--transition-normal);
+    }
+
+    .nav-link:hover { color: var(--color-primary); }
+
+    .btn-nav {
+      background-color: var(--color-primary);
+      color: var(--color-surface) !important;
+      padding: var(--spacing-xs) var(--spacing-md);
+      border-radius: var(--radius-sm);
+    }
+
+    .btn-nav:hover { background-color: var(--color-secondary); }
+
+    .hamburger-btn {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 1001;
+    }
+
+    .hamburger-btn .bar {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background-color: var(--text-dark);
+      border-radius: var(--radius-full);
+      transition: var(--transition-normal);
+    }
+
+    /* BỐ CỤC CHÍNH */
+    .main-wrapper {
+      padding: var(--spacing-lg);
+    }
+
+    .portfolio-layout {
+      max-width: var(--layout-max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      gap: var(--spacing-lg);
+      align-items: start;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-lg);
+      position: sticky;
+      top: calc(56px + var(--spacing-lg));
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-lg);
+    }
+
+    .content-block {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg, 24px);
+      box-shadow: var(--shadow-card);
+      transition: var(--transition-normal);
+    }
+
+    .content-block:hover { box-shadow: var(--shadow-hover); }
+
+    .block-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-sm);
+      border-bottom: 2px solid var(--color-secondary);
+      padding-bottom: var(--spacing-xs);
+      display: inline-block;
+    }
+
+    .profile-block { text-align: center; }
+
+    .avatar-circle {
+      width: var(--avatar-size);
+      height: var(--avatar-size);
+      border-radius: var(--radius-circle);
+      background-color: var(--color-primary);
+      color: var(--color-surface);
+      font-size: 2rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--spacing-sm) auto;
+    }
+
+    .user-name { font-size: 1.4rem; font-weight: bold; color: var(--text-dark); }
+    .user-role { color: var(--color-secondary); font-size: 0.92rem; font-weight: 600; margin-top: calc(var(--spacing-xs) / 2); }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      font-size: 0.9rem;
+      color: var(--text-medium);
+    }
+
+    .contact-list strong { color: var(--text-dark); }
+    .bio-text { color: var(--text-medium); font-size: 0.95rem; }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-md);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-sm) var(--spacing-md);
+      font-size: 0.88rem;
+      font-weight: bold;
+      border-radius: var(--radius-sm);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition-normal);
+    }
+
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: var(--color-surface);
+      border: 1px solid var(--color-primary);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-secondary);
+      border-color: var(--color-secondary);
+    }
+
+    .btn-outline {
+      background-color: var(--color-surface);
+      color: var(--color-primary);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-primary);
+      background-color: var(--color-background);
+    }
+
+    /* BREAKPOINT CHALLENGE: DỊCH VỤ */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-md);
+    }
+
+    .service-card {
+      background-color: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: var(--spacing-md);
+      text-align: center;
+      transition: var(--transition-normal);
+    }
+
+    .service-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--color-primary);
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .service-icon { font-size: 1.8rem; margin-bottom: var(--spacing-xs); }
+    .service-title { font-size: 0.98rem; font-weight: bold; color: var(--text-dark); margin-bottom: var(--spacing-xs); }
+    .service-desc { font-size: 0.82rem; color: var(--text-medium); line-height: 1.5; }
+
+    /* FLEXBOX KỸ NĂNG */
+    .skills-list { display: flex; flex-wrap: wrap; gap: var(--spacing-sm); }
+    .skill-tag {
+      background-color: var(--color-background);
+      border: 1px solid var(--text-light);
+      color: var(--text-medium);
+      padding: var(--spacing-xs) var(--spacing-md);
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: var(--transition-normal);
+    }
+
+    .skill-tag:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background-color: var(--color-surface);
+      transform: translateY(-2px);
+    }
+
+    /* PROJECTS GRID */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--spacing-lg);
+    }
+
+    .project-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: var(--transition-normal);
+      position: relative;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--color-primary);
+    }
+
+    .project-thumb {
+      width: 100%;
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .project-thumb.blue   { background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%); }
+    .project-thumb.cyan   { background: linear-gradient(135deg, #cffafe 0%, #ecfeff 100%); }
+    .project-thumb.violet { background: linear-gradient(135deg, #ede9fe 0%, #f5f3ff 100%); }
+    .project-thumb.green  { background: linear-gradient(135deg, #dcfce7 0%, #f0fdf4 100%); }
+
+    .project-body { padding: var(--spacing-md); }
+    .project-title { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+    .project-desc  { font-size: 0.85rem; color: var(--text-medium); line-height: 1.55; margin-bottom: var(--spacing-sm); }
+
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--spacing-sm); }
+    .project-tag  {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      background: var(--color-background);
+      border: 1px solid var(--color-border);
+      color: var(--text-medium);
+    }
+
+    .project-link {
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: var(--transition-normal);
+    }
+    .project-link:hover { color: var(--color-secondary); gap: 8px; }
+
+    /* ABOUT NÂNG CẤP */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+      margin-top: var(--spacing-md);
+    }
+
+    .about-highlight {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-md);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .about-highlight .hl-num  { font-size: 2rem; font-weight: 800; line-height: 1; }
+    .about-highlight .hl-label{ font-size: 0.85rem; opacity: 0.88; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-sm);
+    }
+
+    .about-quote {
+      border-left: 3px solid var(--color-primary);
+      padding-left: var(--spacing-md);
+      margin-top: var(--spacing-md);
+      font-style: italic;
+      color: var(--text-medium);
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    /* RESPONSIVE MEDIA QUERIES */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .main-wrapper { padding: var(--spacing-md); }
+
+      /* Hiện nút Hamburger */
+      .hamburger-btn { display: flex; }
+
+      /* Menu trượt trên mobile */
+      .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-surface);
+        border-bottom: 1px solid var(--color-border);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease-in-out;
+      }
+
+      .nav-menu.active { max-height: 350px; }
+
+      .nav-list {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: var(--spacing-md) var(--spacing-lg);
+        gap: var(--spacing-md);
+      }
+
+      .nav-link { font-size: 1rem; display: block; width: 100%; padding: var(--spacing-xs) 0; }
+
+      /* 3 gạch biến thành dấu X */
+      .hamburger-btn.active .bar:nth-child(1) {
+        transform: translateY(8.5px) rotate(45deg);
+        background-color: var(--color-primary);
+      }
+      .hamburger-btn.active .bar:nth-child(2) { opacity: 0; }
+      .hamburger-btn.active .bar:nth-child(3) {
+        transform: translateY(-8.5px) rotate(-45deg);
+        background-color: var(--color-primary);
+      }
+
+      /* Bố cục Portfolio 1 cột */
+      .portfolio-layout { grid-template-columns: 1fr; gap: var(--spacing-md); }
+      .sidebar { position: static; order: 1; gap: var(--spacing-md); }
+      .main-content { order: 2; gap: var(--spacing-md); }
+      .content-block { padding: var(--spacing-md); }
+      .services-grid { grid-template-columns: 1fr; gap: var(--spacing-sm); }
+      .projects-grid { grid-template-columns: 1fr; gap: var(--spacing-sm); }
+      .about-grid    { grid-template-columns: 1fr; gap: var(--spacing-md); }
+      .about-stats   { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. THANH ĐIỀU HƯỚNG NAVBAR KÈM NÚT HAMBURGER -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">Quốc Cường<span>.</span></a>
+
+      <!-- Nút bấm Hamburger (3 gạch) -->
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Mở menu điều hướng">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+
+      <!-- Danh sách menu điều hướng -->
+      <nav class="nav-menu" id="navMenu">
+        <ul class="nav-list">
+          <li><a href="#about" class="nav-link">Giới thiệu</a></li>
+          <li><a href="#services" class="nav-link">Dịch vụ</a></li>
+          <li><a href="#projects" class="nav-link">Dự án</a></li>
+          <li><a href="#skills" class="nav-link">Kỹ năng</a></li>
+          <li><a href="#goals" class="nav-link">Mục tiêu</a></li>
+          <li><a href="#contact" class="nav-link btn-nav">Liên hệ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 2. KHU VỰC NỘI DUNG CHÍNH (PORTFOLIO LAYOUT) -->
+  <div class="main-wrapper">
+    <div class="portfolio-layout">
+
+      <!-- CỘT 1: SIDEBAR -->
+      <aside class="sidebar">
+        <!-- Khối Hồ sơ cá nhân -->
+        <section class="content-block profile-block">
+          <div class="avatar-circle">QC</div>
+          <h1 class="user-name">Quốc Cường</h1>
+          <p class="user-role">Frontend Web Developer</p>
+
+          <div class="btn-group">
+            <a href="#contact" class="btn btn-primary">Liên hệ ngay</a>
+            <a href="#" class="btn btn-outline">Tải hồ sơ (CV)</a>
+          </div>
+        </section>
+
+        <!-- Khối Thông tin liên hệ -->
+        <section class="content-block" id="contact">
+          <h2 class="block-title">Thông tin liên hệ</h2>
+          <div class="contact-list">
+            <p><strong>Email:</strong> cuong.nguyen@email.com</p>
+            <p><strong>Điện thoại:</strong> 0901 234 567</p>
+            <p><strong>Địa chỉ:</strong> Hà Nội, Việt Nam</p>
+            <p><strong>GitHub:</strong> github.com/quoccuong</p>
+          </div>
+        </section>
+      </aside>
+
+      <!-- CỘT 2: MAIN CONTENT -->
+      <main class="main-content">
+        
+        <!-- Khối Giới thiệu -->
+        <section class="content-block" id="about">
+          <h2 class="block-title">Giới thiệu bản thân</h2>
+          <p class="bio-text">
+            Xin chào! Tôi là <strong>Quốc Cường</strong> — một Frontend Developer với niềm đam mê
+            biến ý tưởng thành những giao diện đẹp, mượt mà và hiệu quả cao.
+            Tôi không chỉ viết code — tôi <em>kiến tạo trải nghiệm người dùng</em> từng pixel một.
+          </p>
+
+          <!-- Stats nổi bật -->
+          <div class="about-grid">
+            <div class="about-stats">
+              <div class="about-highlight">
+                <span class="hl-num">2+</span>
+                <span class="hl-label">Năm kinh nghiệm</span>
+              </div>
+              <div class="about-highlight">
+                <span class="hl-num">15+</span>
+                <span class="hl-label">Dự án hoàn thành</span>
+              </div>
+              <div class="about-highlight">
+                <span class="hl-num">10+</span>
+                <span class="hl-label">Công nghệ thành thạo</span>
+              </div>
+              <div class="about-highlight">
+                <span class="hl-num">100%</span>
+                <span class="hl-label">Cam kết chất lượng</span>
+              </div>
+            </div>
+            <div>
+              <p class="bio-text" style="margin-bottom: var(--spacing-sm);">
+                Tôi chuyên xây dựng các giao diện web chuẩn <strong>Design System</strong>,
+                sử dụng <strong>CSS Grid &amp; Flexbox</strong> để tạo layout linh hoạt,
+                và triển khai <strong>Responsive Design</strong> mượt mà trên mọi thiết bị.
+              </p>
+              <p class="bio-text">
+                Triết lý làm việc của tôi: <em>Code phải sạch, giao diện phải đẹp, và người dùng phải hài lòng.</em>
+              </p>
+            </div>
+          </div>
+
+          <blockquote class="about-quote">
+            "Design is not just what it looks like and feels like — Design is how it works."
+            <br><strong style="color: var(--text-dark);">— Steve Jobs</strong>
+          </blockquote>
+        </section>
+
+        <!-- BREAKPOINT CHALLENGE: KHU VỰC "DỊCH VỤ" -->
+        <section class="content-block" id="services">
+          <h2 class="block-title">Dịch vụ cung cấp</h2>
+          <div class="services-grid">
+            <div class="service-card">
+              <div class="service-icon">💻</div>
+              <h3 class="service-title">Phát triển Web</h3>
+              <p class="service-desc">Xây dựng trang web chuẩn SEO, tối ưu tốc độ và tương thích đa trình duyệt.</p>
+            </div>
+
+            <div class="service-card">
+              <div class="service-icon">🎨</div>
+              <h3 class="service-title">Thiết kế UI/UX</h3>
+              <p class="service-desc">Thiết kế giao diện người dùng trực quan, hiện đại và chuẩn trải nghiệm người dùng.</p>
+            </div>
+
+            <div class="service-card">
+              <div class="service-icon">⚡</div>
+              <h3 class="service-title">Tối ưu hiệu năng</h3>
+              <p class="service-desc">Tăng tốc độ tải trang, giảm dung lượng tài nguyên và tối ưu hóa mã nguồn CSS/JS.</p>
+            </div>
+
+            <div class="service-card">
+              <div class="service-icon">📱</div>
+              <h3 class="service-title">Responsive Design</h3>
+              <p class="service-desc">Bố cục tự động thích ứng mượt mà từ màn hình máy tính đến máy tính bảng và điện thoại.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Khối Kỹ năng (Skills) - DÙNG FLEXBOX TỰ ĐỘNG XUỐNG DÒNG -->
+        <section class="content-block" id="projects">
+          <h2 class="block-title">Dự án nổi bật</h2>
+          <div class="projects-grid">
+
+            <!-- Dự án 1 -->
+            <div class="project-card">
+              <div class="project-thumb blue">🛒</div>
+              <div class="project-body">
+                <h3 class="project-title">E-Commerce Dashboard</h3>
+                <p class="project-desc">Trang quản lý cửa hàng trực tuyến với biểu đồ doanh thu, quản lý sản phẩm và đơn hàng theo thời gian thực.</p>
+                <div class="project-tags">
+                  <span class="project-tag">HTML5</span>
+                  <span class="project-tag">CSS Grid</span>
+                  <span class="project-tag">JavaScript</span>
+                </div>
+                <a href="#" class="project-link">Xem dự án →</a>
+              </div>
+            </div>
+
+            <!-- Dự án 2 -->
+            <div class="project-card">
+              <div class="project-thumb cyan">🌤️</div>
+              <div class="project-body">
+                <h3 class="project-title">Weather App</h3>
+                <p class="project-desc">Ứng dụng thời tiết theo thời gian thực, hiển thị dự báo 7 ngày, nhiệt độ và độ ẩm theo vị trí GPS.</p>
+                <div class="project-tags">
+                  <span class="project-tag">ReactJS</span>
+                  <span class="project-tag">API</span>
+                  <span class="project-tag">Flexbox</span>
+                </div>
+                <a href="#" class="project-link">Xem dự án →</a>
+              </div>
+            </div>
+
+            <!-- Dự án 3 -->
+            <div class="project-card">
+              <div class="project-thumb violet">📝</div>
+              <div class="project-body">
+                <h3 class="project-title">Task Manager App</h3>
+                <p class="project-desc">Ứng dụng quản lý công việc cá nhân với tính năng drag & drop, phân loại theo độ ưu tiên và lưu trữ LocalStorage.</p>
+                <div class="project-tags">
+                  <span class="project-tag">JavaScript</span>
+                  <span class="project-tag">CSS Variables</span>
+                  <span class="project-tag">LocalStorage</span>
+                </div>
+                <a href="#" class="project-link">Xem dự án →</a>
+              </div>
+            </div>
+
+            <!-- Dự án 4 -->
+            <div class="project-card">
+              <div class="project-thumb green">💼</div>
+              <div class="project-body">
+                <h3 class="project-title">Portfolio Website</h3>
+                <p class="project-desc">Trang portfolio cá nhân chuẩn Design System — CSS Variables, Grid Layout, Hamburger Menu và Responsive hoàn chỉnh.</p>
+                <div class="project-tags">
+                  <span class="project-tag">HTML5</span>
+                  <span class="project-tag">CSS3</span>
+                  <span class="project-tag">Design System</span>
+                </div>
+                <a href="#" class="project-link">Xem dự án →</a>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Khối Kỹ năng (Skills) - DÙNG FLEXBOX TỰ ĐỘNG XUỐNG DÒNG -->
+        <section class="content-block" id="skills">
+          <h2 class="block-title">Kỹ năng (Skills)</h2>
+          <div class="skills-list">
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">CSS Grid</span>
+            <span class="skill-tag">Flexbox</span>
+            <span class="skill-tag">Hamburger Menu</span>
+            <span class="skill-tag">CSS Variables</span>
+            <span class="skill-tag">Design System</span>
+            <span class="skill-tag">Media Queries</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">ReactJS</span>
+            <span class="skill-tag">Git & GitHub</span>
+          </div>
+        </section>
+
+        <!-- Khối Mục tiêu -->
+        <section class="content-block" id="goals">
+          <h2 class="block-title">Mục tiêu nghề nghiệp</h2>
+          <p class="bio-text">
+            Làm chủ các kỹ thuật kiến trúc CSS hiện đại, áp dụng Design System để xây dựng những sản phẩm
+            web quy mô lớn có tính khả dụng cao và dễ dàng mở rộng, bảo trì.
+          </p>
+        </section>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT XỬ LÝ ĐÓNG/MỞ MENU HAMBURGER (CỰC KỲ GỌN NHẸ) -->
+  <script>
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navMenu = document.getElementById('navMenu');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    // 1. Đóng / Mở menu khi nhấn vào nút Hamburger
+    hamburgerBtn.addEventListener('click', () => {
+      hamburgerBtn.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    // 2. Tự động đóng menu lại khi người dùng nhấp vào một mục bất kỳ
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburgerBtn.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

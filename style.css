@@ -1,0 +1,472 @@
+/* ==========================================================================
+   PORTFOLIO DESIGN SYSTEM & RESPONSIVE MENU HAMBURGER
+   
+   Hệ thống biến Design System tại :root:
+   - 2 màu chủ đạo: --color-primary, --color-secondary
+   - 3 mức màu xám cho text: --text-dark, --text-medium, --text-light
+   - 1 màu nền: --color-background
+   - Các biến khoảng cách: --spacing-sm, --spacing-md, --spacing-lg
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. THIẾT LẬP DESIGN SYSTEM BẰNG CSS VARIABLES TẠI :ROOT
+   -------------------------------------------------------------------------- */
+:root {
+  /* 2 màu chủ đạo */
+  --color-primary: #2563eb;          /* Màu chính (Primary Blue) */
+  --color-secondary: #06b6d4;        /* Màu phụ (Secondary Cyan) */
+
+  /* 3 mức màu xám cho text */
+  --text-dark: #0f172a;              /* Xám đậm: Tiêu đề & nội dung quan trọng */
+  --text-medium: #475569;            /* Xám vừa: Văn bản mô tả, liên hệ */
+  --text-light: #94a3b8;             /* Xám nhạt: Chú thích, đường viền thẻ */
+
+  /* 1 màu nền */
+  --color-background: #f8fafc;       /* Màu nền tổng thể trang web */
+
+  /* Các biến khoảng cách (spacing) dùng chung */
+  --spacing-xs: 6px;                 /* Khoảng cách siêu nhỏ: nhãn, badge */
+  --spacing-sm: 10px;                /* Khoảng cách nhỏ: list item, gap kỹ năng */
+  --spacing-md: 16px;                /* Khoảng cách vừa: padding card con, gap mobile */
+  --spacing-lg: 24px;                /* Khoảng cách chuẩn: gap giữa các khối, padding desktop */
+  --spacing-xl: 36px;                /* Khoảng cách lớn */
+
+  /* Các biến bổ trợ bề mặt, kích thước và bo góc */
+  --color-surface: #ffffff;          /* Nền khối Card nội dung */
+  --color-border: #e2e8f0;           /* Đường viền bao quanh các khối */
+
+  --sidebar-width: 280px;            /* Chiều rộng Sidebar trên Desktop */
+  --layout-max-width: 1180px;        /* Chiều rộng tối đa của container */
+  --avatar-size: 88px;               /* Kích thước ảnh đại diện */
+
+  --radius-sm: 8px;                  /* Bo góc thẻ dịch vụ */
+  --radius-md: 14px;                 /* Bo góc khối Card chính */
+  --radius-full: 9999px;             /* Bo tròn dạng viên thuốc */
+  --radius-circle: 50%;              /* Bo tròn hoàn toàn */
+
+  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-hover: 0 10px 25px -5px rgba(37, 99, 235, 0.12);
+  --transition-normal: all 0.25s ease;
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET VÀ BASE STYLES
+   -------------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   3. THANH ĐIỀU HƯỚNG NAVBAR & MENU HAMBURGER
+   -------------------------------------------------------------------------- */
+.navbar {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+.nav-container {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  position: relative;
+}
+
+.nav-logo {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.nav-logo span {
+  color: var(--color-primary);
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: var(--spacing-lg);
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-medium);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: var(--transition-normal);
+}
+
+.nav-link:hover {
+  color: var(--color-primary);
+}
+
+.btn-nav {
+  background-color: var(--color-primary);
+  color: var(--color-surface) !important;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-sm);
+}
+
+.btn-nav:hover {
+  background-color: var(--color-secondary);
+}
+
+/* Nút Hamburger (mặc định ẩn trên màn hình Desktop) */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1001;
+}
+
+.hamburger-btn .bar {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: var(--text-dark);
+  border-radius: var(--radius-full);
+  transition: var(--transition-normal);
+}
+
+/* --------------------------------------------------------------------------
+   4. BỐ CỤC CHÍNH BẰNG CSS GRID (DESKTOP: 2 CỘT)
+   -------------------------------------------------------------------------- */
+.main-wrapper {
+  padding: var(--spacing-lg);
+}
+
+.portfolio-layout {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  position: sticky;
+  top: calc(56px + var(--spacing-lg));
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* --------------------------------------------------------------------------
+   5. CÁC KHỐI NỘI DUNG (CARD COMPONENTS)
+   -------------------------------------------------------------------------- */
+.content-block {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-card);
+  transition: var(--transition-normal);
+}
+
+.content-block:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.block-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+  border-bottom: 2px solid var(--color-secondary);
+  padding-bottom: var(--spacing-xs);
+  display: inline-block;
+}
+
+/* Profile trong Sidebar */
+.profile-block {
+  text-align: center;
+}
+
+.avatar-circle {
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: var(--radius-circle);
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--spacing-sm) auto;
+}
+
+.user-name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--text-dark);
+}
+
+.user-role {
+  color: var(--color-secondary);
+  font-size: 0.92rem;
+  font-weight: 600;
+  margin-top: calc(var(--spacing-xs) / 2);
+}
+
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  font-size: 0.9rem;
+  color: var(--text-medium);
+}
+
+.contact-list strong {
+  color: var(--text-dark);
+}
+
+.bio-text {
+  color: var(--text-medium);
+  font-size: 0.95rem;
+}
+
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: 0.88rem;
+  font-weight: bold;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-surface);
+  border: 1px solid var(--color-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+}
+
+.btn-outline {
+  background-color: var(--color-surface);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+
+.btn-outline:hover {
+  border-color: var(--color-primary);
+  background-color: var(--color-background);
+}
+
+/* --------------------------------------------------------------------------
+   6. BREAKPOINT CHALLENGE: KHU VỰC "DỊCH VỤ"
+   -------------------------------------------------------------------------- */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md);
+}
+
+.service-card {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-md);
+  text-align: center;
+  transition: var(--transition-normal);
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-primary);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-hover);
+}
+
+.service-icon {
+  font-size: 1.8rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.service-title {
+  font-size: 0.98rem;
+  font-weight: bold;
+  color: var(--text-dark);
+  margin-bottom: var(--spacing-xs);
+}
+
+.service-desc {
+  font-size: 0.82rem;
+  color: var(--text-medium);
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   7. DANH SÁCH "KỸ NĂNG" DÙNG FLEXBOX (TỰ ĐỘNG XUỐNG DÒNG)
+   -------------------------------------------------------------------------- */
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.skill-tag {
+  background-color: var(--color-background);
+  border: 1px solid var(--text-light);
+  color: var(--text-medium);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: var(--transition-normal);
+}
+
+.skill-tag:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background-color: var(--color-surface);
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   8. MEDIA QUERIES (RESPONSIVE CHUẨN KÈM MENU HAMBURGER)
+   -------------------------------------------------------------------------- */
+
+/* [MỨC TABLET: 768px ĐẾN 1024px] */
+@media (max-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* [MỨC MOBILE: MÀN HÌNH < 768px] */
+@media (max-width: 768px) {
+  .main-wrapper {
+    padding: var(--spacing-md);
+  }
+
+  /* HIỂN THỊ NÚT HAMBURGER TRÊN MOBILE */
+  .hamburger-btn {
+    display: flex;
+  }
+
+  /* MENU SỔ XUỐNG KHI BẤM NÚT HAMBURGER */
+  .nav-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease-in-out;
+  }
+
+  /* Khi menu được mở (active) */
+  .nav-menu.active {
+    max-height: 350px;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--spacing-md) var(--spacing-lg);
+    gap: var(--spacing-md);
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    display: block;
+    width: 100%;
+    padding: var(--spacing-xs) 0;
+  }
+
+  /* HIỆU ỨNG 3 GẠCH BIẾN THÀNH DẤU 'X' KHI MỞ MENU */
+  .hamburger-btn.active .bar:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+    background-color: var(--color-primary);
+  }
+
+  .hamburger-btn.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-btn.active .bar:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+    background-color: var(--color-primary);
+  }
+
+  /* BỐ CỤC CHÍNH CHUYỂN VỀ 1 CỘT TRÊN MOBILE */
+  .portfolio-layout {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .sidebar {
+    position: static;
+    order: 1;
+    gap: var(--spacing-md);
+  }
+
+  .main-content {
+    order: 2;
+    gap: var(--spacing-md);
+  }
+
+  .content-block {
+    padding: var(--spacing-md);
+  }
+
+  /* KHU VỰC DỊCH VỤ CHUYỂN VỀ 1 CỘT TRÊN MOBILE */
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+}
