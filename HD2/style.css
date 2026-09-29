@@ -1,0 +1,633 @@
+/* ==========================================================================
+   PORTFOLIO STYLESHEET - SENIOR FRONT-END & UI/UX ARCHITECTURE
+   - Hoạt động 1: Loading Indicator độc lập ở giữa màn hình ban đầu
+   - Hoạt động 2: Tự động mở toàn bộ website thực tế với hiệu ứng Scroll Reveal
+   - Hoạt động 3: Tối ưu 60fps hoàn toàn bằng GPU (transform, opacity)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. ROOT TOKENS & RESET
+   -------------------------------------------------------------------------- */
+:root {
+  --bg-primary: #070d19;
+  --bg-secondary: #0f172a;
+  --bg-card: #162035;
+  --bg-card-hover: #1e2c47;
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  --accent-color: #38bdf8;       /* Highlight Cyan */
+  --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+  --accent-glow: rgba(56, 189, 248, 0.35);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-highlight: rgba(56, 189, 248, 0.4);
+  
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.65;
+  overflow-x: hidden;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ==========================================================================
+   1. MÀN HÌNH LOADING BAN ĐẦU (CHỈ CÓ DUY NHẤT VÒNG XOAY NÀY)
+   ========================================================================== */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--bg-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  
+  /* Sử dụng opacity và visibility để GPU tối ưu khi làm mờ */
+  will-change: opacity, visibility;
+  transition: opacity 0.6s var(--ease-smooth), visibility 0.6s ease;
+}
+
+/* Khi xoay xong -> Làm mờ và ẩn đi hoàn toàn */
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Vòng xoay Loading (BT2): Đơn giản, tinh tế, xoay 360 độ liên tục */
+.loader {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.12); /* Các cạnh còn lại mờ */
+  border-top-color: var(--accent-color);       /* Cạnh trên Highlight nổi bật */
+  
+  /* Đưa vào layer GPU để xoay mượt mà tuyệt đối */
+  will-change: transform;
+  animation: spinLoader 0.85s linear infinite;
+}
+
+@keyframes spinLoader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   2. NỘI DUNG TOÀN BỘ WEBSITE THỰC TẾ (XUẤT HIỆN SAU KHI LOAD XONG)
+   ========================================================================== */
+.main-website {
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: opacity, transform;
+  transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+}
+
+.main-website.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --------------------------------------------------------------------------
+   NAVBAR (Thanh điều hướng)
+   -------------------------------------------------------------------------- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(7, 13, 25, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nav-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.nav-logo span {
+  color: var(--accent-color);
+}
+
+.nav-menu {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.25s ease;
+}
+
+.nav-link:hover {
+  color: var(--accent-color);
+}
+
+/* Nút bấm chuyển động GPU */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  
+  /* TUYỆT ĐỐI KHÔNG dùng top/margin khi hover - BẮT BUỘC dùng transform */
+  will-change: transform;
+  transition: transform 0.25s var(--ease-smooth), box-shadow 0.25s var(--ease-smooth);
+}
+
+.btn-primary {
+  background: var(--accent-gradient);
+  color: #050b14;
+  box-shadow: 0 4px 16px var(--accent-glow);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(56, 189, 248, 0.45);
+}
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-outline:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   HERO BANNER
+   -------------------------------------------------------------------------- */
+.hero-section {
+  padding: 100px 0 80px 0;
+  text-align: center;
+  background: radial-gradient(circle at 50% 10%, rgba(56, 189, 248, 0.12) 0%, transparent 60%);
+}
+
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 50px;
+  background: rgba(56, 189, 248, 0.1);
+  color: var(--accent-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  margin-bottom: 24px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+
+.hero-title {
+  font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  max-width: 850px;
+}
+
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-desc {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  max-width: 680px;
+  margin-bottom: 36px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 64px;
+}
+
+/* Stats Bar */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  width: 100%;
+  max-width: 860px;
+  background: var(--bg-secondary);
+  padding: 24px 32px;
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+}
+
+@media (max-width: 768px) {
+  .stats-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-num {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--accent-color);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   3. HIỆU ỨNG CUỘN TRANG (SCROLL REVEAL - PURE CSS)
+   Tự động kích hoạt khi cuộn chuột đến các phần tử
+   ========================================================================== */
+.section {
+  padding: 90px 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.section-title-wrap {
+  text-align: center;
+  max-width: 650px;
+  margin: 0 auto 50px auto;
+}
+
+.sub-heading {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: var(--accent-color);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.main-heading {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+/* Keyframes cho hiệu ứng Scroll Reveal (Chỉ dùng Opacity & Transform GPU) */
+@keyframes scrollFadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-reveal {
+  will-change: transform, opacity;
+}
+
+/* Áp dụng CSS Scroll-Driven Animations */
+@supports (animation-timeline: view()) {
+  .scroll-reveal {
+    animation: scrollFadeSlideUp linear both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 32%;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   ABOUT SECTION GRID
+   -------------------------------------------------------------------------- */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 24px;
+}
+
+.about-card {
+  background: var(--bg-card);
+  padding: 32px;
+  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  will-change: transform;
+  transition: transform 0.3s var(--ease-smooth), border-color 0.3s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-highlight);
+}
+
+.card-icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.about-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 12px;
+}
+
+.about-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* --------------------------------------------------------------------------
+   PROJECTS SECTION (CARD HOVER GPU 60FPS)
+   -------------------------------------------------------------------------- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+.project-card {
+  background: var(--bg-card);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+  
+  /* Tối ưu hover bằng transform: translateY() thay vì top */
+  will-change: transform;
+  transition: transform 0.35s var(--ease-smooth), box-shadow 0.35s var(--ease-smooth), border-color 0.35s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+  border-color: var(--border-highlight);
+}
+
+.project-preview {
+  height: 190px;
+  padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.preview-1 { background: linear-gradient(135deg, #1e3a8a, #0369a1); }
+.preview-2 { background: linear-gradient(135deg, #065f46, #0d9488); }
+.preview-3 { background: linear-gradient(135deg, #581c87, #7c3aed); }
+
+.project-tag {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.project-body {
+  padding: 24px;
+}
+
+.project-body h3 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+
+.project-body p {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  margin-bottom: 18px;
+}
+
+.tech-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.tech-tags span {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.project-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.btn-text {
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform 0.2s ease;
+  will-change: transform;
+}
+
+.btn-text:hover {
+  transform: translateX(4px);
+}
+
+.btn-text.secondary {
+  color: var(--text-muted);
+}
+
+.btn-text.secondary:hover {
+  color: var(--text-main);
+}
+
+/* --------------------------------------------------------------------------
+   SKILLS PILLS
+   -------------------------------------------------------------------------- */
+.skills-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.skill-pill {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  will-change: transform;
+  transition: transform 0.25s var(--ease-smooth), border-color 0.25s ease, background 0.25s ease;
+}
+
+.skill-pill:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-color);
+  background: rgba(56, 189, 248, 0.1);
+  color: var(--accent-color);
+}
+
+/* --------------------------------------------------------------------------
+   CONTACT SECTION
+   -------------------------------------------------------------------------- */
+.contact-card {
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+  padding: 60px 40px;
+  border-radius: 18px;
+  border: 1px solid var(--border-subtle);
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact-card h2 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.contact-card p {
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-input {
+  width: 100%;
+  background: rgba(7, 13, 25, 0.6);
+  border: 1px solid var(--border-subtle);
+  padding: 14px 18px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+}
+
+/* --------------------------------------------------------------------------
+   FOOTER
+   -------------------------------------------------------------------------- */
+.footer {
+  padding: 40px 0;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.btn-reload {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--accent-color);
+  border: 1px solid var(--border-subtle);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  will-change: transform;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.btn-reload:hover {
+  transform: translateY(-2px);
+  background: rgba(56, 189, 248, 0.15);
+}

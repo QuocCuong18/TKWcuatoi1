@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alex Nguyen - Senior Creative Developer & UI/UX</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ====================================================================
+       1. PHẦN LOADING (BT2):
+       Ban đầu màn hình CHỈ CÓ DUY NHẤT vòng tròn xoay này ở chính giữa.
+       Không có bất kỳ chữ hay nội dung nào khác xuất hiện.
+       ==================================================================== -->
+  <div id="loadingScreen" class="loading-screen">
+    <div class="loader"></div>
+  </div>
+
+  <!-- ====================================================================
+       2. NỘI DUNG PORTFOLIO THỰC TẾ:
+       Được ẩn hoàn toàn lúc đầu. Sau khi vòng xoay loading chạy xong (~1.8s),
+       toàn bộ website thật này sẽ xuất hiện mượt mà.
+       ==================================================================== -->
+  <div id="mainWebsite" class="main-website">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="navbar">
+      <div class="nav-container">
+        <a href="#" class="nav-logo">Alex<span>.dev</span></a>
+        <nav class="nav-menu">
+          <a href="#about" class="nav-link">Giới Thiệu</a>
+          <a href="#projects" class="nav-link">Dự Án</a>
+          <a href="#skills" class="nav-link">Kỹ Năng</a>
+          <a href="#contact" class="nav-link">Liên Hệ</a>
+        </nav>
+        <a href="#contact" class="btn btn-primary nav-cta">Tuyển Dụng Tôi</a>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO BANNER -->
+      <section class="hero-section">
+        <div class="container hero-container">
+          <div class="hero-badge">
+            <span class="status-dot"></span> Sẵn sàng nhận dự án mới
+          </div>
+          <h1 class="hero-title">
+            Thiết Kế Trải Nghiệm Số & <br>
+            <span class="gradient-text">Lập Trình Web Tốc Độ Cao</span>
+          </h1>
+          <p class="hero-desc">
+            Tôi là Alex Nguyễn — Senior Front-End Developer & UI/UX Specialist với 5+ năm kinh nghiệm 
+            xây dựng các ứng dụng web đạt chuẩn 60fps, tương tác mượt mà và tối ưu chuyển động trên GPU.
+          </p>
+          <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">Xem Dự Án Đã Làm</a>
+            <a href="#contact" class="btn btn-outline">Nhận Báo Giá Dự Án</a>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="stats-bar">
+            <div class="stat-item">
+              <span class="stat-num">05+</span>
+              <span class="stat-label">Năm Kinh Nghiệm</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">48+</span>
+              <span class="stat-label">Dự Án Hoàn Thành</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">99.8%</span>
+              <span class="stat-label">Khách Hàng Hài Lòng</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num">60fps</span>
+              <span class="stat-label">Chuẩn Mượt Trên Mobile</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT SECTION (ÁP DỤNG SCROLL REVEAL) -->
+      <section id="about" class="section scroll-reveal">
+        <div class="container">
+          <div class="section-title-wrap">
+            <span class="sub-heading">VỀ BẢN THÂN</span>
+            <h2 class="main-heading">Biến Ý Tưởng Thành Hiện Thực</h2>
+          </div>
+
+          <div class="about-grid">
+            <div class="about-card scroll-reveal">
+              <div class="card-icon">⚡</div>
+              <h3>Tối Ưu Hiệu Năng GPU</h3>
+              <p>Mọi animation và chuyển động hover đều tận dụng triệt để <code>transform: translate3d()</code> và <code>opacity</code>, hoàn toàn nói không với các thuộc tính gây reflow lag giật như <code>top/left</code>.</p>
+            </div>
+
+            <div class="about-card scroll-reveal">
+              <div class="card-icon">🎯</div>
+              <h3>Trải Nghiệm Cuộn Hiện Đại</h3>
+              <p>Tự động xuất hiện từng khối nội dung khi cuộn chuột nhờ kỹ thuật <strong>Scroll-Driven Animations</strong> thế hệ mới, mượt mà mà không tốn tài nguyên chạy JavaScript.</p>
+            </div>
+
+            <div class="about-card scroll-reveal">
+              <div class="card-icon">📱</div>
+              <h3>Mobile First & Responsive</h3>
+              <p>Giao diện thích ứng linh hoạt trên mọi kích thước màn hình từ iPhone, iPad đến màn hình 4K Ultrawide, tương tác chạm vuốt không có độ trễ.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS SHOWCASE SECTION (ÁP DỤNG SCROLL REVEAL & GPU HOVER) -->
+      <section id="projects" class="section scroll-reveal">
+        <div class="container">
+          <div class="section-title-wrap">
+            <span class="sub-heading">DỰ ÁN TIÊU BIỂU</span>
+            <h2 class="main-heading">Các Sản Phẩm Đã Phát Triển</h2>
+          </div>
+
+          <div class="projects-grid">
+            <!-- Project 1 -->
+            <article class="project-card scroll-reveal">
+              <div class="project-preview preview-1">
+                <span class="project-tag">Fintech App</span>
+              </div>
+              <div class="project-body">
+                <h3>NexFinance - Nền Tảng Tài Chính Thông Minh</h3>
+                <p>Ứng dụng quản lý dòng tiền và phân tích số liệu thời gian thực với biểu đồ tương tác 120fps.</p>
+                <div class="tech-tags">
+                  <span>React</span>
+                  <span>TypeScript</span>
+                  <span>Tailwind</span>
+                  <span>GPU Canvas</span>
+                </div>
+                <div class="project-actions">
+                  <a href="#" class="btn-text">Xem Chi Tiết &rarr;</a>
+                  <a href="#" class="btn-text secondary">Demo Trực Tiếp &UpperRightArrow;</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 2 -->
+            <article class="project-card scroll-reveal">
+              <div class="project-preview preview-2">
+                <span class="project-tag">E-Commerce</span>
+              </div>
+              <div class="project-body">
+                <h3>AuraStore - Cửa Hàng Thời Trang Cao Cấp</h3>
+                <p>Website bán lẻ trực tuyến với trải nghiệm giỏ hàng tức thì, tốc độ tải trang đạt 100 điểm Google Lighthouse.</p>
+                <div class="tech-tags">
+                  <span>Next.js 15</span>
+                  <span>GraphQL</span>
+                  <span>Stripe API</span>
+                </div>
+                <div class="project-actions">
+                  <a href="#" class="btn-text">Xem Chi Tiết &rarr;</a>
+                  <a href="#" class="btn-text secondary">Demo Trực Tiếp &UpperRightArrow;</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 3 -->
+            <article class="project-card scroll-reveal">
+              <div class="project-preview preview-3">
+                <span class="project-tag">AI Platform</span>
+              </div>
+              <div class="project-body">
+                <h3>GenFlow AI - Xử Lý Ảnh Nghệ Thuật</h3>
+                <p>Hệ thống sinh ảnh AI với giao diện tối giản, tối ưu tương tác kéo thả Canvas mượt mà.</p>
+                <div class="tech-tags">
+                  <span>Vue.js</span>
+                  <span>WebGL</span>
+                  <span>Python API</span>
+                </div>
+                <div class="project-actions">
+                  <a href="#" class="btn-text">Xem Chi Tiết &rarr;</a>
+                  <a href="#" class="btn-text secondary">Demo Trực Tiếp &UpperRightArrow;</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- SKILLS SECTION -->
+      <section id="skills" class="section scroll-reveal">
+        <div class="container">
+          <div class="section-title-wrap">
+            <span class="sub-heading">KỸ NĂNG CHUYÊN MÔN</span>
+            <h2 class="main-heading">Công Nghệ & Công Cụ Nổi Bật</h2>
+          </div>
+
+          <div class="skills-wrapper">
+            <div class="skill-pill scroll-reveal">HTML5 Semantic</div>
+            <div class="skill-pill scroll-reveal">Pure CSS3 / CSS Grid</div>
+            <div class="skill-pill scroll-reveal">GPU Compositing & 60fps</div>
+            <div class="skill-pill scroll-reveal">JavaScript (ES6+)</div>
+            <div class="skill-pill scroll-reveal">React / Next.js</div>
+            <div class="skill-pill scroll-reveal">Tailwind CSS</div>
+            <div class="skill-pill scroll-reveal">Scroll-Driven Animations</div>
+            <div class="skill-pill scroll-reveal">UI/UX Design (Figma)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT SECTION -->
+      <section id="contact" class="section scroll-reveal">
+        <div class="container">
+          <div class="contact-card scroll-reveal">
+            <span class="sub-heading">KẾT NỐI VỚI TÔI</span>
+            <h2>Sẵn Sàng Hợp Tác Trong Dự Án Tiếp Theo?</h2>
+            <p>Dù bạn cần xây dựng một giao diện Portfolio, Landing Page chuyển đổi cao hay Web App phức tạp, tôi luôn sẵn sàng hỗ trợ.</p>
+            
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Cảm ơn bạn! Tin nhắn đã được gửi thành công.');">
+              <div class="form-row">
+                <input type="text" placeholder="Họ và tên của bạn" required class="form-input">
+                <input type="email" placeholder="Địa chỉ email" required class="form-input">
+              </div>
+              <textarea placeholder="Nội dung dự án hoặc lời nhắn..." rows="4" required class="form-input"></textarea>
+              <button type="submit" class="btn btn-primary submit-btn">Gửi Tin Nhắn Ngay &rarr;</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="container footer-content">
+        <p>&copy; 2026 Alex Nguyen. Tất cả giao diện được code bằng Pure HTML5 & CSS3 tối ưu hiệu năng.</p>
+        <button class="btn-reload" onclick="replayLoading()">🔄 Chạy Lại Vòng Xoay Loading</button>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Script điều khiển chuyển cảnh: Lúc đầu chỉ có loading xoay, xong rồi hiện web -->
+  <script>
+    // Đợi 1.8 giây để người dùng thấy vòng tròn loading xoay đều, sau đó ẩn loading và hiện web
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const loader = document.getElementById('loadingScreen');
+        const main = document.getElementById('mainWebsite');
+
+        // Làm mờ và ẩn màn hình loading
+        loader.classList.add('hidden');
+
+        // Hiển thị website chính mượt mà
+        main.classList.add('visible');
+      }, 1800);
+    });
+
+    // Nút chạy lại loading để kiểm tra bất kỳ lúc nào
+    function replayLoading() {
+      const loader = document.getElementById('loadingScreen');
+      const main = document.getElementById('mainWebsite');
+
+      main.classList.remove('visible');
+      loader.classList.remove('hidden');
+
+      setTimeout(() => {
+        loader.classList.add('hidden');
+        main.classList.add('visible');
+      }, 1800);
+    }
+  </script>
+</body>
+</html>

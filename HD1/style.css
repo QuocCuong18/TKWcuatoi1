@@ -1,0 +1,98 @@
+/* Reset CSS & Layout căn giữa màn hình */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f5f9;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.card {
+  text-align: center;
+  background: #ffffff;
+  padding: 48px 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+}
+
+h1 {
+  font-size: 22px;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+p {
+  color: #64748b;
+  margin-bottom: 32px;
+  font-size: 15px;
+}
+
+/* ==========================================================
+   NÚT "GỬI TIN NHẮN" VỚI TRANSITION CUBIC-BEZIER
+   ========================================================== */
+.send-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #2563eb; /* Màu mặc định: Xanh dương sáng */
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
+
+  /* Trạng thái ban đầu */
+  transform: translateY(0) scale(1);
+  box-shadow: 0 4px 8px -2px rgba(37, 99, 235, 0.25),
+              0 2px 4px -2px rgba(0, 0, 0, 0.08);
+
+  /* Cấu hình transition với cubic-bezier cho chuyển động tự nhiên */
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.25s cubic-bezier(0.25, 0.8, 0.25, 1),
+              background-color 0.2s ease;
+}
+
+/* Icon máy bay giấy */
+.send-icon {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ==========================================================
+   1. KHI HOVER:
+   - Đổi màu sẫm hơn
+   - Nâng lên 3px (translateY(-3px))
+   - Bóng đổ (box-shadow) đậm và sâu hơn
+   ========================================================== */
+.send-btn:hover {
+  background-color: #1d4ed8; /* Đổi màu xanh đậm hơn */
+  transform: translateY(-3px) scale(1); /* Nhích lên trên 3px */
+  box-shadow: 0 12px 24px -4px rgba(29, 78, 216, 0.4),
+              0 6px 12px -4px rgba(0, 0, 0, 0.12); /* Đổ bóng đậm hơn */
+}
+
+/* Icon nhích nhẹ góc khi hover */
+.send-btn:hover .send-icon {
+  transform: translate(2px, -2px) scale(1.1);
+}
+
+/* ==========================================================
+   2. KHI CLICK (ACTIVE):
+   - Thu nhỏ lại (scale(0.95)) tạo cảm giác "đã bấm" chân thật
+   - Giảm bóng đổ
+   ========================================================== */
+.send-btn:active {
+  transform: translateY(0) scale(0.95); /* Thu nhỏ lại khi bấm */
+  box-shadow: 0 2px 6px -1px rgba(29, 78, 216, 0.3); /* Bóng đổ thu gọn */
+  transition-duration: 0.1s; /* Phản hồi nhấn tức thì */
+}
